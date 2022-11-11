@@ -64,7 +64,7 @@ main {
 }
 
 .player--active {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.563);
 }
 .player--active .name {
   font-weight: 700;
@@ -81,7 +81,7 @@ main {
   background-color: #c7365f;
   opacity: 0.8;
   border-radius: 9px;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.614);
   width: 65%;
   padding: 2rem;
   text-align: center;

@@ -9,6 +9,7 @@ const playerOne = document.querySelector('.player--0');
 const playerTwo = document.querySelector('.player--1');
 const diceImage = document.getElementById('img');
 const btnRollDice = document.querySelector('.btn--roll');
+
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.close-modal');
@@ -27,10 +28,10 @@ btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
 
 document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeModal();
-    }
-  });
+  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+    closeModal();
+  }
+});
 
 const setCurrentPoints = function () {
   playerOne.classList.contains('player--active')
@@ -61,6 +62,7 @@ const changePlayerToActive = function () {
 };
 
 let rollDice = function () {
+  diceImage.classList.remove('hidden');
   let number = Math.trunc(Math.random() * 6) + 1;
   if (number === 1) {
     changeDiceImage(number);
@@ -91,13 +93,13 @@ const holdPointsFunction = function () {
       document.querySelector('#score--0').textContent = holdPointsPlayerOne;
       currentPointsPlayerOne = 0;
       setCurrentPoints();
-      changePlayerToActive()
-    }else {
+      changePlayerToActive();
+    } else {
       holdPointsPlayerOne = currentPointsPlayerOne;
       document.querySelector('#score--0').textContent = holdPointsPlayerOne;
       currentPointsPlayerOne = 0;
       setCurrentPoints();
-      changePlayerToActive()
+      changePlayerToActive();
     }
   } else if (playerTwo.classList.contains('player--active')) {
     if (Number(document.querySelector('#score--1').textContent) > 0) {
@@ -107,31 +109,30 @@ const holdPointsFunction = function () {
       document.querySelector('#score--1').textContent = holdPointsPlayerTwo;
       currentPointsPlayerTwo = 0;
       setCurrentPoints();
-      changePlayerToActive()
+      changePlayerToActive();
     } else {
       holdPointsPlayerTwo = currentPointsPlayerTwo;
       document.querySelector('#score--1').textContent = holdPointsPlayerTwo;
       currentPointsPlayerTwo = 0;
       setCurrentPoints();
-      changePlayerToActive()
+      changePlayerToActive();
     }
-  }if(holdPointsPlayerOne>=10){
+  }
+  if (holdPointsPlayerOne >= 100) {
     btnRollDice.classList.add('hidden');
     holdPoints.classList.add('hidden');
-    openModal()
-    const hOne = document.getElementById("h1");
+    openModal();
+    const hOne = document.getElementById('h1');
 
     hOne.textContent += `Congratulations to the player number 1 🎉🎉🎉  Your score is: ${holdPointsPlayerOne}`;
-
-} else if (holdPointsPlayerTwo>=10){
+  } else if (holdPointsPlayerTwo >= 100) {
     btnRollDice.classList.add('hidden');
     holdPoints.classList.add('hidden');
-    openModal()
-    const hOne = document.getElementById("h1");
+    openModal();
+    const hOne = document.getElementById('h1');
 
     hOne.textContent += `Congratulations to the player number 2 🎉🎉🎉  Your score is: ${holdPointsPlayerTwo}`;
-
-}
+  }
 };
 
 holdPoints.addEventListener('click', holdPointsFunction);
@@ -142,4 +143,3 @@ const reloadPage = function () {
   location.reload();
 };
 btnNewGame.addEventListener('click', reloadPage);
-
