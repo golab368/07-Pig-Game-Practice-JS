@@ -1,6 +1,5 @@
 'use strict';
-let currentPointsPlayerOne = 0;
-let currentPointsPlayerTwo = 0;
+let currentPointsPlayer = 0;
 let holdPointsPlayerOne = 0;
 let holdPointsPlayerTwo = 0;
 
@@ -35,30 +34,23 @@ document.addEventListener('keydown', function (e) {
 
 const setCurrentPoints = function () {
   playerOne.classList.contains('player--active')
-    ? (document.querySelector('#current--0').textContent =
-        currentPointsPlayerOne)
-    : (document.querySelector('#current--1').textContent =
-        currentPointsPlayerTwo);
+    ? (document.querySelector('#current--0').textContent = currentPointsPlayer)
+    : (document.querySelector('#current--1').textContent = currentPointsPlayer);
+};
+
+const setHoldPoints = function (currentPointsPlayer) {
+  playerOne.classList.contains('player--active')
+    ?(holdPointsPlayerOne += currentPointsPlayer) && (document.querySelector('#score--0').textContent = holdPointsPlayerOne) 
+    : (holdPointsPlayerTwo += currentPointsPlayer) && (document.querySelector('#score--1').textContent = holdPointsPlayerTwo);
 };
 
 const changeDiceImage = function (number) {
   diceImage.src = `dice-${number}.png`;
 };
 
-const addPoints = function (number) {
-  playerOne.classList.contains('player--active')
-    ? (currentPointsPlayerOne += number)
-    : (currentPointsPlayerTwo += number);
-};
-
-const changePlayerToActive = function () {
-  if (playerOne.classList.contains('player--active')) {
-    playerOne.classList.remove('player--active');
-    playerTwo.classList.add('player--active');
-  } else {
-    playerTwo.classList.remove('player--active');
-    playerOne.classList.add('player--active');
-  }
+const changePlayer = function () {
+  playerOne.classList.toggle('player--active');
+  playerTwo.classList.toggle('player--active');
 };
 
 let rollDice = function () {
@@ -66,18 +58,12 @@ let rollDice = function () {
   let number = Math.trunc(Math.random() * 6) + 1;
   if (number === 1) {
     changeDiceImage(number);
-    if (playerOne.classList.contains('player--active')) {
-      currentPointsPlayerOne = 0;
-      setCurrentPoints();
-      changePlayerToActive();
-    } else {
-      currentPointsPlayerTwo = 0;
-      setCurrentPoints();
-      changePlayerToActive();
-    }
+    currentPointsPlayer = 0;
+    setCurrentPoints();
+    changePlayer();
   } else {
     changeDiceImage(number);
-    addPoints(number);
+    currentPointsPlayer += number;
     setCurrentPoints();
   }
 };
@@ -85,19 +71,12 @@ let rollDice = function () {
 btnRollDice.addEventListener('click', rollDice);
 
 const holdPointsFunction = function () {
-  if (playerOne.classList.contains('player--active')) {
-    holdPointsPlayerOne += currentPointsPlayerOne;
-    document.querySelector('#score--0').textContent = holdPointsPlayerOne;
-    currentPointsPlayerOne = 0;
-    setCurrentPoints();
-    changePlayerToActive();
-  } else {
-    holdPointsPlayerTwo += currentPointsPlayerTwo;
-    document.querySelector('#score--1').textContent = holdPointsPlayerTwo;
-    currentPointsPlayerTwo = 0;
-    setCurrentPoints();
-    changePlayerToActive();
-  }
+
+  setHoldPoints(currentPointsPlayer);
+  currentPointsPlayer = 0;
+  setCurrentPoints();
+  changePlayer();
+
   if (holdPointsPlayerOne >= 100) {
     playerOne.classList.add('player--winner');
     btnRollDice.classList.add('hidden');
