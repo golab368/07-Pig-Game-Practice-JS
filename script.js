@@ -86,37 +86,18 @@ btnRollDice.addEventListener('click', rollDice);
 
 const holdPointsFunction = function () {
   if (playerOne.classList.contains('player--active')) {
-    if (Number(document.querySelector('#score--0').textContent) > 0) {
-      holdPointsPlayerOne =
-        Number(document.querySelector('#score--0').textContent) +
-        currentPointsPlayerOne;
+      holdPointsPlayerOne += currentPointsPlayerOne;
       document.querySelector('#score--0').textContent = holdPointsPlayerOne;
       currentPointsPlayerOne = 0;
       setCurrentPoints();
       changePlayerToActive();
-    } else {
-      holdPointsPlayerOne = currentPointsPlayerOne;
-      document.querySelector('#score--0').textContent = holdPointsPlayerOne;
-      currentPointsPlayerOne = 0;
-      setCurrentPoints();
-      changePlayerToActive();
-    }
-  } else if (playerTwo.classList.contains('player--active')) {
-    if (Number(document.querySelector('#score--1').textContent) > 0) {
-      holdPointsPlayerTwo =
-        Number(document.querySelector('#score--1').textContent) +
-        currentPointsPlayerTwo;
+    
+  } else {
+      holdPointsPlayerTwo += currentPointsPlayerTwo;
       document.querySelector('#score--1').textContent = holdPointsPlayerTwo;
       currentPointsPlayerTwo = 0;
       setCurrentPoints();
       changePlayerToActive();
-    } else {
-      holdPointsPlayerTwo = currentPointsPlayerTwo;
-      document.querySelector('#score--1').textContent = holdPointsPlayerTwo;
-      currentPointsPlayerTwo = 0;
-      setCurrentPoints();
-      changePlayerToActive();
-    }
   }
   if (holdPointsPlayerOne >= 100) {
     btnRollDice.classList.add('hidden');
